@@ -1,5 +1,6 @@
 package org.surl;
 
+import java.net.URL;
 import java.util.concurrent.Callable;
 
 import picocli.CommandLine;
@@ -26,7 +27,21 @@ public class SurlCli implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        server.start(8080);
+        URL netUrl = new URL(url);
+        int port = netUrl.getPort();
+        if(port==-1){
+            switch(netUrl.getProtocol()){
+                case "http":
+                    port=80;
+                    break;
+                case "https":
+                    port=443;
+                    break;
+                default :
+                    throw new Exception("invalid http uri, unrecognised protocol:"+netUrl.getProtocol());
+            }
+        }
+        server.start(port);
         return 0;
     }
 
