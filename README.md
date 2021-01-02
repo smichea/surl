@@ -28,6 +28,8 @@ tar -xvzf graalvm-ce-java11-linux-amd64-20.3.0.tar.gz
 ```
 Move the unpacked dir to `/usr/lib/jvm/` and create a symbolic link to make your life easier when updating the GraalVM version:
 ```
-mv graalvm-ce-java11-linux-amd64-20.3.0/ /usr/lib/jvm/
-
+mv graalvm-ce-java11-20.3.0/ /usr/lib/jvm/
+rm graalvm-ce-java11-linux-amd64-20.3.0.tar.gz
+cd /usr/lib/jvm/
+ln -s graalvm-ce-java11-20.3.0 graalvm
 ```
