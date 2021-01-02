@@ -104,7 +104,8 @@ get `native-image` tool
 compile the jar to native image
 ```
 cd /home/surl/target
-/usr/lib/jvm/graalvm/bin/native-image --static -jar surl-1.0.jar
+/usr/lib/jvm/graalvm/bin/native-image --static -jar surl-1.0.jar  -H:+ReportExceptionStackTraces --no-fallback --initialize-at-run-time=io.netty.util.internal.logging.Log4JLogger  --allow-incomplete-classpath --enable-url-protocols=http --enable-url-protocols=https
+
 ```
 
 if you get an error 137
@@ -112,21 +113,3 @@ if you get an error 137
 Error: Image build request failed with exit status 137
 ```
 Free some memory (like stopping docker images)
-
-right now the compilation fails with the error :
-```
-/usr/bin/ld: cannot find -lz
-collect2: error: ld returned 1 exit status
-        at com.oracle.svm.hosted.image.NativeBootImageViaCC.handleLinkerFailure(NativeBootImageViaCC.java:463)
-        at com.oracle.svm.hosted.image.NativeBootImageViaCC.write(NativeBootImageViaCC.java:430)
-        at com.oracle.svm.hosted.NativeImageGenerator.doRun(NativeImageGenerator.java:680)
-        at com.oracle.svm.hosted.NativeImageGenerator.lambda$run$0(NativeImageGenerator.java:471)
-        at java.base/java.util.concurrent.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1407)
-        at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
-        at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
-        at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
-        at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
-        at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
-Error: Image build request failed with exit status 1
-
-```
