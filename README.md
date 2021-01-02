@@ -101,6 +101,11 @@ get `native-image` tool
 /usr/lib/jvm/graalvm/bin/gu install native-image
 ```
 
+get `libz.a`
+```
+sudo apt-get install -y libz-dev
+```
+
 compile the jar to native image
 ```
 cd /home/surl/target
