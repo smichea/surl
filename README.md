@@ -20,6 +20,7 @@ same surl command on the destination server will allow to log the request sent b
 ## Get the source code
 On a linux system clone this repo
 ```
+cd /home
 # git clone https://github.com/smichea/surl.git
 ```
 
@@ -93,4 +94,15 @@ and check the version of java
 openjdk version "11.0.9" 2020-10-20
 OpenJDK Runtime Environment GraalVM CE 20.3.0 (build 11.0.9+10-jvmci-20.3-b06)
 OpenJDK 64-Bit Server VM GraalVM CE 20.3.0 (build 11.0.9+10-jvmci-20.3-b06, mixed mode, sharing)
+```
+
+get `native-image` tool
+```
+/usr/lib/jvm/graalvm/bin/gu install native-image
+```
+
+compile the jar to native image
+```
+cd /home/surl/target
+/usr/lib/jvm/graalvm/bin/native-image --static -jar surl-1.0.jar
 ```
