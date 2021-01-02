@@ -15,8 +15,37 @@ surl is a tool to receive data from a client, test if it is what we expect and s
 It is the complement to curl in the sense that if you have a curl command, starting first the
 same surl command on the destination server will allow to log the request sent by curl, check it is valid and send a response. 
 
-## compilation of binaries
-assumes you used maven to compile the uberjar surl-xx.jar
+# Compilation of binaries
+
+## Get the source code
+On a linux system clone this repo
+```
+# git clone https://github.com/smichea/surl.git
+```
+
+## Compile the jar
+
+Make sure you have Java and Maven installed 
+```
+# echo $JAVA_HOME
+/usr/lib/jvm/java-11-openjdk-amd64/
+# echo $MAVEN_HOME
+/usr/share/maven
+```
+if not install jdk11 and maven with apt-get
+```
+apt-get install openjdk-11-jdk
+apt-get install maven
+```
+and set the env variables `JAVA_HOME` and `MAVEN_HOME`
+
+Compile the project
+```
+cd surl
+mvn install
+```
+
+## Compile the binaries
 
 Install graalVM
 ```
