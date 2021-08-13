@@ -20,11 +20,21 @@ public class SurlChannelHandler extends SimpleChannelInboundHandler<FullHttpRequ
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest msg) throws Exception {
         //log the request
         System.out.println("uri:"+msg.uri());
-        msg.headers().entries().forEach(entry->{System.out.println("header "+entry.getKey()+":"+entry.getValue());});
+        final StringBuffer responseBody=new StringBuffer("{\"uri\":\""+msg.uri()+"\",\n\"headers\":{\n");
+        msg.headers().entries().forEach(entry->{
+            String header="\""+entry.getKey()+"\":\""+entry.getValue()+"\",";
+            System.out.println(header);
+            responseBody.append(header);
+        });
+        
+        //wonderfull way to remove the last comma ...
+        responseBody.setLength(responseBody.length() - 1);
+        
+        responseBody.append("\n}\n}");
         //return the response
-        ByteBuf content = Unpooled.copiedBuffer("Hello surl!", CharsetUtil.UTF_8);  
+        ByteBuf content = Unpooled.copiedBuffer(responseBody.toString(), CharsetUtil.UTF_8);  
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
-        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html");
+        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "application/json");
         response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());  
         ctx.write(response);
         ctx.flush(); 
